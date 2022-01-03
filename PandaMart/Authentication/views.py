@@ -6,8 +6,8 @@ def landingView (request):
 
     return render(request, 'Views/Landing.html')
     
-def loginView ():
-    pass
+def loginView (request):
+    return render(request, 'Views/Authentication/Login.html')
 
-def RegistrationView():
-    pass
+def RegistrationView(request):
+    return render(request, 'Views/Authentication/Registration.html')

@@ -5,12 +5,12 @@ from django.conf.urls.static import static
 
 from PandaMart.settings import STATIC_URL
 
-from .import views
+from . import views
 
 urlpatterns = [
    path('', views.landingView),
-   path('/login', views.loginView),
-   path('/registration', views.RegistrationView),
+   path('login/', views.loginView),
+   path('registration/', views.RegistrationView),
 ]
 
 if settings.DEBUG:
