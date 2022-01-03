@@ -1,9 +1,9 @@
 from django.contrib import admin
 from django.urls import path, include
 
-from PandaMart import Authentication
 
 urlpatterns = [
+    path ('', include('Authentication.urls')),
     path('admin/', admin.site.urls),
-    path ('', include('Authentication.views')),
+  
 ]
