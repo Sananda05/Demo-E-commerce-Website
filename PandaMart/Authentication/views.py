@@ -2,6 +2,7 @@ from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.hashers import make_password
 from django.contrib.auth import authenticate,login
+from django.contrib import sessions
 
 # Create your views here.
 
@@ -19,6 +20,7 @@ def loginView (request):
         if User.objects.filter(username=username[0], password=encrypt_pass).exists:
             print("Successfully logged in")
             alert="Successfully logged in"
+            request.session['check']= 'okay'
             return redirect('/homepage')
             
         else:
