@@ -8,4 +8,5 @@ class ProductInfo(models.Model):
     price = models.CharField(max_length=100)
     view = models.CharField(max_length=100)
     quantity = models.CharField(max_length=100)
+    img = models.ImageField((""), upload_to="product_img/")
     

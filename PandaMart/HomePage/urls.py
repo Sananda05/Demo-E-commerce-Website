@@ -8,7 +8,7 @@ from PandaMart.settings import STATIC_URL
 from . import views
 
 urlpatterns = [
-   path('/homepage', views.homePageView),
+   path('homepage/', views.homePageView),
 ]
 
 if settings.DEBUG:

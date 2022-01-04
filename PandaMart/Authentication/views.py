@@ -19,7 +19,7 @@ def loginView (request):
         if User.objects.filter(username=username[0], password=encrypt_pass).exists:
             print("Successfully logged in")
             alert="Successfully logged in"
-            return render(request, 'Views/Authentication/Login.html' , {'succ_alert':alert})
+            return redirect('/homepage')
             
         else:
             print("Failed to log in")
