@@ -1,16 +1,38 @@
 from django.shortcuts import redirect, render
 from django.contrib.auth.models import User, auth
 from django.contrib.auth.hashers import make_password
-from django.contrib import messages
+from django.contrib.auth import authenticate,login
 
 # Create your views here.
 
 def landingView (request):
 
     return render(request, 'Views/Landing.html')
-    
+
 def loginView (request):
-    return render(request, 'Views/Authentication/Login.html')
+    if request.method == "POST":
+        username = request.POST['username'],
+        password = request.POST['password'],
+
+        encrypt_pass = make_password(str(password[0]))
+
+        if User.objects.filter(username=username[0], password=encrypt_pass).exists:
+            print("Successfully logged in")
+            alert="Successfully logged in"
+            return render(request, 'Views/Authentication/Login.html' , {'succ_alert':alert})
+            
+        else:
+            print("Failed to log in")
+            alert="Failed to log in"
+            return render(request, 'Views/Landing.html' , {'err_alert':alert})
+
+
+        # if user is not None:
+        #     print("Successfully logged in")
+        #     login(request,user[0])
+        #     return redirect('/')
+    else:    
+        return render(request, 'Views/Authentication/Login.html')
 
 def RegistrationView(request):
 
@@ -26,7 +48,7 @@ def RegistrationView(request):
         encrypt_pass = make_password(str(password))
 
         print(password[0]+ "pass")
-        
+
 
         if User.objects.filter(username=username).exists():
 
@@ -36,7 +58,7 @@ def RegistrationView(request):
         if User.objects.filter(email=email).exists():
 
             alert="Email is already taken"
-            return render(request, 'Views/Authentication/Registration.html' , {'alert':alert})    
+            return render(request, 'Views/Authentication/Registration.html' , {'alert':alert})
 
 
         if len(password[0])<8:
@@ -50,7 +72,7 @@ def RegistrationView(request):
 
         elif (Valid_password_uppercase(str(password[0]))== False):
             alert="Password must contain a uppercase letter"
-            return render(request, 'Views/Authentication/Registration.html' , {'alert':alert}) 
+            return render(request, 'Views/Authentication/Registration.html' , {'alert':alert})
 
         elif (Valid_password_specialChar(str(password[0]))== False):
             alert="Password must contain a special character"
@@ -61,7 +83,7 @@ def RegistrationView(request):
 
 
 
-        else:    
+        else:
 
             if password[0] == c_password[0]:
                 user = User.objects.create(first_name= f_name,last_name=l_name, username = username, email=email,password=encrypt_pass )
@@ -73,7 +95,7 @@ def RegistrationView(request):
                 return render(request, 'Views/Authentication/Registration.html' , {'alert':alert})
 
 
-    else:    
+    else:
         return render(request, 'Views/Authentication/Registration.html')
 
 
@@ -81,15 +103,15 @@ def Valid_password_lowercase(password):
 
     if not any(char.islower() for char in password):
         return False
-    
+
 
 def Valid_password_uppercase(password):
     if not any(char.isupper() for char in password):
-        return False                   
+        return False
 
 def Valid_password_specialChar(password):
-    
-    special_characters = """!@#$%^&*()-+?_=,<>/""" 
+
+    special_characters = """!@#$%^&*()-+?_=,<>/"""
 
     if any(c in special_characters for c in password):
         return True
@@ -100,4 +122,4 @@ def Valid_password_digit(password):
 
     if (password[0].isdigit()):
         print(password[0])
-        return True                      
+        return True
