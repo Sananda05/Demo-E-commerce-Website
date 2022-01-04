@@ -8,9 +8,9 @@ def homePageView(request):
 
         if request.method == "GET":
 
-            product_list = ProductInfo.objects.all()
-            print(product_list)
+            # product_list = ProductInfo.objects.all()
+            # print(product_list)
 
-            return render(request, "Views/HomePage/Home.html",{'products':product_list})
+            return render(request, "Views/HomePage/Home.html")
 
 
